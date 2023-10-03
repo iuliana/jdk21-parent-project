@@ -1,0 +1,70 @@
+= JDK 21 Simple Multi-Module Project
+
+This project showcases multi-level modules build with Maven  4.0.0-alpha-7 & Java 21.
+
+Run
+
+[source]
+====
+mvn
+====
+
+Because the project is declared with
+
+[source]
+====
+ <defaultGoal>clean install</defaultGoal>
+====
+
+== Maven 4.0.0-alpha-7 Demo
+
+'''
+=== Scenario 0: `Automatic parent/dependency versioning`
+
+1. Show version defined as ` <version>${revision}</version>` root link:pom.xml[pom.xml].  and missing in children.
+2. Show the link:.mvn/maven.config[.mvn/maven.config].
+3. Run `mvn`  and check version used to label the jars. Should be the one from root link:.mvn/maven.config[.mvn/maven.config] .
+4. Run `mvn -Drevision=3.0-SNAPSHOT` and check version used to label the jars. Should be the one provided as argument.
+5. Show the missing `<version>${parent.version}</version>` in dependencies.
+6. Show building module: `mvn -pl :child-three-project` or `mvn -pl :child-three-project`
+
+NOTE: Value from command line overrides variable from link:.mvn/maven.config[.mvn/maven.config].
+
+NOTE: Value from link:.mvn/maven.config[.mvn/maven.config] overrides the one from link:pom.xml[pom.xml].
+
+=== Scenario 1 : `-r / --resume` without project name, or dependencies (compared to -rf)
+
+Modify link:.src/main/java/org/mytoys/two/MainTwoTest.java[MainTwoTest#testOne] and make it fail. +
+Run `mvn`  and watch the build fail. +
+Correct test and run `mvn -r` and watch it pass. +
+Result:
+[source]
+====
+[INFO] Scanning for projects...
+[INFO] Resuming from org.mytoys:child-two-project, org.mytoys:child-three-project due to the --resume / -r feature.
+====
+
+=== Scenario 2: `-fos`
+
+Run `mvn -fos WARN`. +
+Fails because:
+[source]
+====
+[WARNING] Version not locked for default bindings plugins [maven-clean-plugin, maven-resources-plugin, maven-surefire-plugin, maven-jar-plugin, maven-install-plugin], you should define versions in pluginManagement section of your pom.xml or parent.
+====
+
+NOTE: Lock plugin versions to make build reproducible.
+
+=== Parallel Build: `-T 4` & `-r`
+
+Run `mvn -T 4`  and watch the build pass. +
+Modify link:.src/main/java/org/mytoys/two/MainTwoTest.java[MainTwoTest#testOne] and make it fail. +
+Run `mvn -T 4`  and watch the build fail. +
+Fix the test and run `mvn -r`. +
+Result: notice only `child-two-project` & `child-three-project` are built.
+
+NOTE: Show new options `mvn --help`
+
+== Java 21 Demo
+
+'''
