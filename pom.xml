@@ -16,7 +16,6 @@
     </modules>
     <packaging>pom</packaging>
 
-
     <properties>
         <revision>1.0-SNAPSHOT</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -38,7 +37,7 @@
     </dependencies>
 
     <build>
-        <defaultGoal>clean package</defaultGoal>
+        <defaultGoal>clean install</defaultGoal>
         <pluginManagement>
             <plugins>
                 <plugin>

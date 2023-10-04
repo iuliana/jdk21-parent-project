@@ -29,7 +29,7 @@ NOTE: Works with JDK8.
 3. Run `mvn`  and check version used to label the jars. Should be the one from root link:.mvn/maven.config[.mvn/maven.config] .
 4. Run `mvn -Drevision=3.0-SNAPSHOT` and check version used to label the jars. Should be the one provided as argument.
 5. Show the missing `<version>${parent.version}</version>` in dependencies.
-6. Show building module: `mvn -pl :child-three-project` or `mvn -pl :child-three-project`
+6. Show building module: `mvn -pl :child-three-project` or `mvn -pl child-three-project`
 
 NOTE: Value from command line overrides variable from link:.mvn/maven.config[.mvn/maven.config].
 
@@ -46,6 +46,8 @@ Result:
 [INFO] Scanning for projects...
 [INFO] Resuming from org.mytoys:child-two-project, org.mytoys:child-three-project due to the --resume / -r feature.
 ====
+
+NOTE: Resume information is kept in the root `target` directory in file `resume.properties`
 
 === Scenario 2: `-fos`
 

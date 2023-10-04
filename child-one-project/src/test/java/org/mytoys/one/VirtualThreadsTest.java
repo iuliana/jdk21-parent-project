@@ -1,5 +1,6 @@
 package org.mytoys.one;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import java.util.concurrent.*;
 
 // >> Virtual threads: sum = 47880; time = 1026 ms
 // >> OS threads: sum = 50507; time = 10058 ms
+
+@Disabled("For Maven demo")
 public class VirtualThreadsTest {
 
     @Test
