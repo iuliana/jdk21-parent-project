@@ -1,4 +1,4 @@
-= JDK 21 Simple Multi-Module Project
+= JDK 21 & Maven 4 Simple Multi-Module Project
 
 This project showcases multi-level modules build with Maven  4.0.0-alpha-7 & Java 21.
 
@@ -19,6 +19,9 @@ Because the project is declared with
 == Maven 4.0.0-alpha-7 Demo
 
 '''
+
+NOTE: Works with JDK8.
+
 === Scenario 0: `Automatic parent/dependency versioning`
 
 1. Show version defined as ` <version>${revision}</version>` root link:pom.xml[pom.xml].  and missing in children.

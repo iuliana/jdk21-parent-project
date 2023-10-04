@@ -1,4 +1,4 @@
-<project root ="true" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -46,6 +46,11 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.11.0</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.1.2</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -53,11 +58,25 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <!-- since version 3.10.1-->
+                    <release>${java.version}</release>
+                    <enablePreview>true</enablePreview>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>--enable-preview</argLine>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <!--
+    JEP 7.
+    java -jar -XX:+UseZGC -Xms16G -Xmx16G -Xlog:gc\*:gc.log child-two-project/target/child-two-project-2.0-SNAPSHOT.jar
+    java -jar -XX:+UseZGC -Xms16G -Xmx16G -Xlog:gc\* child-two-project/target/child-two-project-2.0-SNAPSHOT.jar
+    -->
 
 </project>
