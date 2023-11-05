@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * JEP 6. Sequenced Collections : methods in the java.util.SequencedCollection<E> interface

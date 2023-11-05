@@ -73,3 +73,88 @@ NOTE: Show new options `mvn --help`
 == Java 21 Demo
 
 '''
+=== JEP 430. String Templates (preview)
+
+link:./child-one-project/src/test/java/org/mytoys/one/StringTemplatesTest.java[StringTemplatesTest#testStringTemplates21]
+
+[source]
+----
+cd child-one-project
+mvn -Dtest=StringTemplatesTest#testStringTemplates21
+# JSON processor
+mvn -Dtest=StringTemplatesTest#testStringTemplates21JSONProcessor
+# FMT processor
+mvn -Dtest=StringTemplatesTest#testFMTTemplates21Processor
+----
+
+=== JEP 440. Record Patterns
+
+link:./child-one-project/src/test/java/org/mytoys/one/RecordPatternsTest.java[RecordPatternsTest#testRecordPatterns16]
+
+[source]
+----
+cd child-one-project
+mvn -Dtest=RecordPatternsTest#testRecordPatterns16
+mvn -Dtest=RecordPatternsTest#testRecordPatterns
+----
+
+=== JEP 441. Pattern Matching for `switch`
+
+link:./child-one-project/src/test/java/org/mytoys/one/RecordPatternsTest.java[RecordPatternsTest#testRecordPatterns16]
+
+[source]
+----
+cd child-one-project
+mvn -Dtest=RecordPatternsTest#testRecordPatterns
+----
+
+=== JEP 443. Unnamed Pattern & Unnamed Variables (preview)
+
+link:./child-one-project/src/test/java/org/mytoys/one/RecordPatternsTest.java[RecordPatternsTest#testUnnamedPattern]
+
+[source]
+----
+cd child-one-project
+mvn -Dtest=RecordPatternsTest#testUnnamedPattern
+----
+
+=== JEP 445. Unnamed Classes & Instance main Methods (preview)
+
+link:.child-one-project/src/main/java/MainOne.java[MainOne]
+
+[source]
+----
+cd ..
+java --enable-preview --source 21 child-one-project/src/main/java/MainOne.java
+----
+
+=== JEP 431. Sequenced Collections
+
+link:.child-one-project/src/test/java/org/mytoys/one/SequencedCollectionsTest.java[SequencedCollectionsTest#testSequencedCollections]
+
+[source]
+----
+cd child-one-project
+mvn -Dtest=SequencedCollectionsTest#testSequencedCollections
+----
+
+=== JEP 439. Z Garbage Collector
+
+[source]
+----
+mvn clean install
+
+java -jar -XX:+UseZGC -Xms4G -Xmx16G -XX:ConcGCThreads=20 -Xlog:gc\*:gc.log child-two-project/target/child-two-project-2.0-SNAPSHOT.jar
+
+java -jar -XX:+UseZGC -Xms4G -Xmx16G -XX:ConcGCThreads=20 -Xlog:gc\*:gc.log child-two-project/target/child-two-project-2.0-SNAPSHOT.jar
+
+
+# Execution time: 18074 ms - -XX:+ZGenerational
+# Execution time: 14345 ms - non-generational
+----
+
+Compare it with Parallel GC from JDK 8: link:/Users/iuliana/.work-mine/jdk8-gc-test/jdk8-gc-test[jdk8-gc-test]
+
+=== JEP 452. Key Encapsulation Mechanism API
+
+TODO!!

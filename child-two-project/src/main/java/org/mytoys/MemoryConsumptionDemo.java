@@ -14,14 +14,16 @@ public class MemoryConsumptionDemo {
     private static final Random random = new Random();
 
     public static void main(String... args) {
+        long t1 = System.currentTimeMillis();
         printTotalMemory(log);
         List<Singer> singers = new ArrayList<>();
-        for (int i = 0; i < 1_000_000; ++i) {
+        for (int i = 0; i < 50_000_000; ++i) {
             singers.add(genSinger());
             if (i % 1000 == 0) {
                 printBusyMemory(log);
             }
         }
+        System.out.println("Execution time: " + (System.currentTimeMillis() - t1) + " ms");
     }
     private static Singer genSinger() {
         return new Singer(nameGenerator.genName(), random.nextDouble(), LocalDate.now());

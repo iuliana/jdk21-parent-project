@@ -24,6 +24,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20231013</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.10.0</version>
@@ -74,7 +80,7 @@
 
     <!--
     JEP 7.
-    java -jar -XX:+UseZGC -Xms16G -Xmx16G -Xlog:gc\*:gc.log child-two-project/target/child-two-project-2.0-SNAPSHOT.jar
+    java -jar -XX:+UseZGC -Xms16G -Xmx16G -XX:+ZGenerational -Xlog:gc\*:gc.log child-two-project/target/child-two-project-2.0-SNAPSHOT.jar
     java -jar -XX:+UseZGC -Xms16G -Xmx16G -Xlog:gc\* child-two-project/target/child-two-project-2.0-SNAPSHOT.jar
     -->
 

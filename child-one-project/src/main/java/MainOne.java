@@ -25,6 +25,7 @@ static void staticMethod(){
     System.out.println("static method");
 }
 
+// Purpose: students can write their first programs without needing to understand language features designed for large programs.
  // Rules:
 // 1. package Statement is Not Allowed
 // 2. No Constructor is Allowed

@@ -2,6 +2,13 @@ package org.mytoys.one;
 
 import org.junit.jupiter.api.Test;
 
+
+record FullName (String firstName, String lastName){ }
+
+record PersonRecord (FullName fullName, Integer age) {}
+
+record WrapperBeing<T>(T t, String description) { }
+
 /**
  * Record Patterns
  */
@@ -18,7 +25,7 @@ public class RecordPatternsTest {
 
     @Test
     void testRecordPatterns () {
-        // JEP 2. Pattern Matching for instanceof with Records (Java 19)
+        // JEP 440. Pattern Matching for instanceof with Records (Java 19)
         Object  john =  new FullName("John", "Doe");
         if (john instanceof FullName full) {
             System.out.println("> FirstName: " + full.firstName());
@@ -44,7 +51,7 @@ public class RecordPatternsTest {
             System.out.println(">>> PersonRecord: " + personRecord);
         }
 
-        // JEP 3. Pattern Matching for switch
+        // JEP 441. Pattern Matching for switch
         var result = switch (john) {
             case FullName j -> j.firstName();
             default -> "default";
@@ -68,7 +75,7 @@ public class RecordPatternsTest {
     }
 
     /**
-     * JEP 4. Unnamed Pattern & Unnamed Variables
+     * JEP 443. Unnamed Pattern & Unnamed Variables
      * eliminate useless info, make to code easier to read and understand
      */
     @Test
@@ -81,7 +88,7 @@ public class RecordPatternsTest {
             System.out.println(">>> Age: " + age);
         }
 
-        // Unnamed Pattern - stolen for Go :D
+        // Unnamed Pattern - stolen from Go :D
         if (johnRecord instanceof PersonRecord (_, var age)) {
             System.out.println(">>> [Unnamed Pattern]Age : " + age);
         }
@@ -96,10 +103,4 @@ public class RecordPatternsTest {
         }
     }
 }
-
-record FullName (String firstName, String lastName){ }
-
-record PersonRecord (FullName fullName, Integer age) {}
-
-record WrapperBeing<T>(T t, String description) { }
 
