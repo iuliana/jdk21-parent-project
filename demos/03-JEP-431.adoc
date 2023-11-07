@@ -1,0 +1,13 @@
+== Java 21 Demo
+
+'''
+
+=== JEP 431. Sequenced Collections
+
+link:.child-one-project/src/test/java/org/mytoys/one/SequencedCollectionsTest.java[SequencedCollectionsTest#testSequencedCollections]
+
+[source]
+----
+cd child-one-project
+mvn -Dtest=SequencedCollectionsTest#testSequencedCollections
+----

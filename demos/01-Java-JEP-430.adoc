@@ -29,26 +29,13 @@
 * `String translateEscapes()` - Returns a string whose value is this string, with escape sequences translated as if in a string literal.
 * `String formatted(Object... args)` - Formats using this string as the format string, and the supplied arguments.
 
-
-In Java 21:
+*In Java 21:*
 
 * `int indexOf(int ch, int beginIndex, int endIndex)` - Returns the index within this string of the first occurrence of the specified character, starting the search at `beginIndex` and stopping before `endIndex`.
 * `int indexOf(String str, int beginIndex, int endIndex)` - Returns the index of the first occurrence of the specified substring within the specified index range of this string. (equivalent of `s.substring(beginIndex, endIndex).indexOf(str) + beginIndex`)
 * `String[] splitWithDelimiters(String regex, int limit)` - Splits this string around matches of the given regular expression and returns both the strings and the matching delimiters. (the pattern will be applied at most `limit-1` times)
 
-link:../child-one-project/src/test/java/org/mytoys/one/StringTemplatesTest.java[StringTemplatesTest#testStringTemplates21]
-
-[source]
-----
-cd child-one-project
-mvn -Dtest=StringTemplatesTest#testStringTemplates21
-# JSON processor
-mvn -Dtest=StringTemplatesTest#testStringTemplates21JSONProcessor
-# FMT processor
-mvn -Dtest=StringTemplatesTest#testFMTTemplates21Processor
-----
-
-== Verbiage
+== String Templates
 
 Java did not have for a long time a way to embed variables in strings to be resolved at runtime.
 
@@ -83,3 +70,14 @@ It works with multi-line strings too.
 
 It provides clarity => coupling literal text with embedded expressions and template processors to produce specialized results.
 
+link:../child-one-project/src/test/java/org/mytoys/one/StringTemplatesTest.java[StringTemplatesTest#testStringTemplates21]
+
+[source]
+----
+cd child-one-project
+mvn -Dtest=StringTemplatesTest#testStringTemplates21
+# JSON processor
+mvn -Dtest=StringTemplatesTest#testStringTemplates21JSONProcessor
+# FMT processor
+mvn -Dtest=StringTemplatesTest#testFMTTemplates21Processor
+----

@@ -82,7 +82,7 @@ public static void main () {}
 // is equivalent to
 void main () {}
 ----
-* the `main()` method can only access other own static members
+* the file can only declare static members (fields and methods), and static methods can only access other static members.
 * the `main(..)` method can have arguments too
 [source, java]
 ----

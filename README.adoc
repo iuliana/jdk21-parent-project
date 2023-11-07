@@ -16,39 +16,4 @@ Because the project is declared with
  <defaultGoal>clean install</defaultGoal>
 ====
 
-
-
-== Java 21 Demo
-
-'''
-
-=== JEP 431. Sequenced Collections
-
-link:.child-one-project/src/test/java/org/mytoys/one/SequencedCollectionsTest.java[SequencedCollectionsTest#testSequencedCollections]
-
-[source]
-----
-cd child-one-project
-mvn -Dtest=SequencedCollectionsTest#testSequencedCollections
-----
-
-=== JEP 439. Z Garbage Collector
-
-[source]
-----
-mvn clean install
-
-java -jar -XX:+UseZGC -Xms4G -Xmx16G -XX:ConcGCThreads=20 -Xlog:gc\*:gc.log child-two-project/target/child-two-project-2.0-SNAPSHOT.jar
-
-java -jar -XX:+UseZGC -Xms4G -Xmx16G -XX:ConcGCThreads=20 -Xlog:gc\*:gc.log child-two-project/target/child-two-project-2.0-SNAPSHOT.jar
-
-
-# Execution time: 18074 ms - -XX:+ZGenerational
-# Execution time: 14345 ms - non-generational
-----
-
-Compare it with Parallel GC from JDK 8: link:/Users/iuliana/.work-mine/jdk8-gc-test/jdk8-gc-test[jdk8-gc-test]
-
-=== JEP 452. Key Encapsulation Mechanism API
-
-TODO!!
+All the demo sessions are grouped link:demos[here].
