@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.text.MessageFormat;
 
 import static java.util.FormatProcessor.FMT;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -82,7 +83,7 @@ public class StringTemplatesTest {
 
     @Test
     void testStringTemplates21JSONProcessor () {
-        /// CREATE NEW TEMPLATE PROCESSOR
+        // Java 21 (preview) : create new template processor that produces a JSONObject
         var JSON = StringTemplate.Processor.of(
                 (StringTemplate template) -> new JSONObject(template.interpolate())
         );
@@ -94,7 +95,7 @@ public class StringTemplatesTest {
                 "message2" : "and I am \{john.age} years old."
             }
             """;
-        assertTrue(introduction instanceof JSONObject);
+        assertNotNull(introduction);
         System.out.println("[testStringTemplates21JSONProcessor]: introduction = " + introduction);
     }
 

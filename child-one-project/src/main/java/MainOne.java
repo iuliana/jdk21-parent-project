@@ -6,12 +6,12 @@ public class MainOne {
 }
 */
 
-// JEP 5. Unnamed Classes and Instance Main Methods (Preview)
+// JEP 445. Unnamed Classes and Instance Main Methods (Preview)
 // run with:
 // java --enable-preview --source 21 child-one-project/src/main/java/MainOne.java
 // implied static
 void main() {
-    System.out.println("Child One Project.");
+    System.out.println("Running Java code directly");
     if(staticVariable) {
         System.out.println("static variable");
     }

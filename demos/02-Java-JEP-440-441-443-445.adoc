@@ -1,0 +1,100 @@
+== Java 21 Demo
+
+'''
+
+To test if an object has a specific type, we use the `instanceof` operator followed by a cast in order to obtain the object with the proper type to use.
+
+In JDK 14, JEP 305 previewed enhanced the `instanceof` operator that both tests the parameter and assigns it to a binding variable of the proper type.
+
+The enhanced `instanceof` operator became official in JDK 16 (JEP 394).
+
+link:../child-one-project/src/test/java/org/mytoys/one/RecordPatternsTest.java[RecordPatternsTest#testRecordPatterns394]
+
+[source]
+----
+cd child-one-project
+# JEP 394
+mvn -Dtest=RecordPatternsTest#testRecordPatterns394
+----
+
+=== JEP 440. Record Patterns
+
+Record patterns allows us to deconstruct record values.
+
+link:../child-one-project/src/test/java/org/mytoys/one/RecordPatternsTest.java[RecordPatternsTest#testRecordPatterns440]
+
+[source]
+----
+cd child-one-project
+# JEP 440
+mvn -Dtest=RecordPatternsTest#testRecordPatterns440
+----
+
+=== JEP 441. Pattern Matching for `switch`
+
+Extending pattern matching to switch allows an expression to be tested against a number of patterns, each with a specific action, so that complex data-oriented queries can be expressed concisely and safely.
+
+link:../child-one-project/src/test/java/org/mytoys/one/RecordPatternsTest.java[RecordPatternsTest#testRecordPatterns441]
+
+[source]
+----
+cd child-one-project
+# JEP 441
+mvn -Dtest=RecordPatternsTest#testRecordPatterns441
+----
+
+=== JEP 443. Unnamed Pattern & Unnamed Variables (preview)
+
+Enhance the Java language with unnamed patterns, which match a record component without stating the component's name or type, and `unnamed variables`, which can be initialized but not used. Both are denoted by an underscore character, `_`.
+
+link:../child-one-project/src/test/java/org/mytoys/one/RecordPatternsTest.java[RecordPatternsTest#testUnnamedPattern443]
+
+[source]
+----
+cd child-one-project
+# JEP 443
+mvn -Dtest=RecordPatternsTest#testUnnamedPattern443
+----
+
+=== JEP 445. Unnamed Classes and Instance Main Methods (preview)
+
+Evolve the Java language so that students can write their first programs without needing to understand language features designed for large programs. What do they mean by this? The ability to run Java code directly without needing to compile it.
+
+Wait, what!? Wasn't JShell an option? Yes ... but single line commands are not practical.
+
+link:../child-one-project/src/main/java/MainOne.java[MainOne#main]
+
+[source]
+----
+# JEP 445
+java --enable-preview --source 21 child-one-project/src/main/java/MainOne.java
+----
+
+In directly-runnable Java files, the following rules apply:
+
+* `package` statement is NOT ALLOWED
+* there is no class definition and no constructor
+* the code in the file is enclosed in an unnamed class, that cannot `extend` or `implement`
+* a `main()` method `Must Exist` and is `static` by default (and `public`)
+[source, java]
+----
+public static void main () {}
+// is equivalent to
+void main () {}
+----
+* the `main()` method can only access other own static members
+* the `main(..)` method can have arguments too
+[source, java]
+----
+void main(String... args) {
+    System.out.println("Running Java code directly");
+    if (args.length > 0) {
+        System.out.print(" with argument " + args[0] + "\n");
+        }
+    if(staticVariable) {
+        System.out.println("static variable");
+    }
+
+    staticMethod();
+ }
+----

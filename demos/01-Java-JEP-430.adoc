@@ -1,0 +1,85 @@
+== Java 21 Demo
+
+'''
+=== JEP 430. String Templates (preview)
+
+`String` is probably the most type used in Java programming. Over the years it received many improvements, like better optimization possibilities,  multi-line blocks and new practical methods of text transformations.
+
+*In Java 11:*
+
+* `strip()` - Returns a string whose value is this string, with all leading
+ and trailing white space removed.
+* `stripLeading()` - Returns a string whose value is this string, with all leading white space removed.
+* `stripTrailing()` - Returns a string whose value is this string, with all trailing white space removed.
+* `isBlank()` - Returns `true if the string is empty or contains only white space codepoints, otherwise `false`.
+* `lines()` - Returns a stream of lines extracted from this string,
+ separated by line terminators.
+* `repeat(int count)` - Returns a string whose value is the concatenation of this string repeated `count` times.
+
+*In Java 12:*
+
+* `indent(int n)` - Adjusts the indentation of each line of this string based on the value of `n`, and normalizes line termination characters.
+* `<R> R transform(Function<? super String, ? extends R> f)` - This method allows the application of a function to `this` string. The function should expect a single String argument and produce an `R` result.
+* `describeConstable()` - Returns an `Optional<String> containing the nominal descriptor for this instance, which is the instance itself.
+* `resolveConstantDesc(MethodHandles.Lookup lookup)` - Resolves this instance as a `ConstantDesc`, the result of which is the instance itself.
+
+*In Java 15:*
+
+* `String stripIndent()` -  Returns a string whose value is this string, with incidental `white space` removed from the beginning and end of every line.
+* `String translateEscapes()` - Returns a string whose value is this string, with escape sequences translated as if in a string literal.
+* `String formatted(Object... args)` - Formats using this string as the format string, and the supplied arguments.
+
+
+In Java 21:
+
+* `int indexOf(int ch, int beginIndex, int endIndex)` - Returns the index within this string of the first occurrence of the specified character, starting the search at `beginIndex` and stopping before `endIndex`.
+* `int indexOf(String str, int beginIndex, int endIndex)` - Returns the index of the first occurrence of the specified substring within the specified index range of this string. (equivalent of `s.substring(beginIndex, endIndex).indexOf(str) + beginIndex`)
+* `String[] splitWithDelimiters(String regex, int limit)` - Splits this string around matches of the given regular expression and returns both the strings and the matching delimiters. (the pattern will be applied at most `limit-1` times)
+
+link:../child-one-project/src/test/java/org/mytoys/one/StringTemplatesTest.java[StringTemplatesTest#testStringTemplates21]
+
+[source]
+----
+cd child-one-project
+mvn -Dtest=StringTemplatesTest#testStringTemplates21
+# JSON processor
+mvn -Dtest=StringTemplatesTest#testStringTemplates21JSONProcessor
+# FMT processor
+mvn -Dtest=StringTemplatesTest#testFMTTemplates21Processor
+----
+
+== Verbiage
+
+Java did not have for a long time a way to embed variables in strings to be resolved at runtime.
+
+Most languages implement String interpolation in the following way:
+
+* Evaluate expression/variable
+* Convert to String if needed
+* Insert resulted String into the original String literal
+
+While extremely helpful, it has a few drawbacks:
+
+* replacing the result of the interpolation would create an invalid overall String literal without validation
+* SQL injections
+* Invalid JSON
+* results need to be validated or secured, especially when interacting with other systems
+
+So Java designers wanted to improve on this. Introducing `String Templates` , Java’s alternative to String interpolation. In the case of `String Templates`, their goal is to provide the clarity of interpolation with safer out-of-the-box result, plus the options to extend and bend the feature to our needs if required.
+
+The new way to work with Strings in Java is called `template expression`, a programmable way of safely interpolating expressions in String literals. To create a template expression, we need two things:
+
+[source,asciidoc]
+----
+[A template processor].[A template containing wrapped expressions like\{varName}]
+----
+
+The main template processor is `STR`. The Java compiler automatically imports it in any Java class as a `public static final field`.
+
+STR is an instance of a  processor, similar to a `Function(String) -> String`
+
+Expected to replace older ways of formatting strings: concatenation, `StringBuilder`,`String.format()`, `MessageFormat` class. Either they create code hard to read or they are just too verbose for a simple task.
+It works with multi-line strings too.
+
+It provides clarity => coupling literal text with embedded expressions and template processors to produce specialized results.
+

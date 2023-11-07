@@ -15,8 +15,8 @@ record WrapperBeing<T>(T t, String description) { }
 public class RecordPatternsTest {
 
     @Test
-    void testRecordPatterns16 () {
-        // Java 16: Pattern Matching for instanceof
+    void testRecordPatterns394 () {
+        // Java 16: Enhanced instanceof
         Being being = new Person("john", "doe", 42);
         if (being instanceof Person person) {
             System.out.println("FirstName: " + person.getFirstName());
@@ -24,22 +24,22 @@ public class RecordPatternsTest {
     }
 
     @Test
-    void testRecordPatterns () {
+    void testRecordPatterns440 () {
         // JEP 440. Pattern Matching for instanceof with Records (Java 19)
-        Object  john =  new FullName("John", "Doe");
+        Object john = new FullName("John", "Doe");
         if (john instanceof FullName full) {
             System.out.println("> FirstName: " + full.firstName());
         }
 
         // extracting the values of the pattern variable using a deconstruction pattern
-        if (john instanceof FullName (String firstName, String lastName)) {
+        if (john instanceof FullName(String firstName, String lastName)) {
             System.out.println(">> FirstName: " + firstName);
             System.out.println(">> LastName: " + lastName);
         }
 
-        Object johnRecord =  new PersonRecord((FullName) john, 42);
-        // works with `var` and composed records too
-        if (johnRecord instanceof PersonRecord (FullName (var firstName, String lastName), var age)) {
+        Object johnRecord = new PersonRecord((FullName) john, 42);
+        // works with `var` and nested records too
+        if (johnRecord instanceof PersonRecord(FullName(var firstName, String lastName), var age)) {
             System.out.println(">>> FirstName: " + firstName);
             System.out.println(">>> LastName: " + lastName);
             System.out.println(">>> Age: " + age);
@@ -50,6 +50,12 @@ public class RecordPatternsTest {
         if (wrapper instanceof WrapperBeing<PersonRecord>(var personRecord, var description)) {
             System.out.println(">>> PersonRecord: " + personRecord);
         }
+    }
+
+    @Test
+    void testRecordPatterns441 () {
+        Object john = new FullName("John", "Doe");
+        Object johnRecord = new PersonRecord((FullName) john, 42);
 
         // JEP 441. Pattern Matching for switch
         var result = switch (john) {
@@ -79,7 +85,7 @@ public class RecordPatternsTest {
      * eliminate useless info, make to code easier to read and understand
      */
     @Test
-    void testUnnamedPattern(){
+    void testUnnamedPattern443(){
         var  john =  new FullName("John", "Doe");
 
         Object johnRecord =  new PersonRecord(john, 42);
