@@ -20,6 +20,9 @@ public class SequencedCollectionsTest {
         list.add("two");
         list.add("three");
 
+        printl("[first element]", list.getFirst());
+        printl("[last element]", list.getLast());
+        System.out.println("---------------------------------------------------");
         printl("[original list]");
         list.addFirst("zero");
         printl("[after addFirst(..)]");

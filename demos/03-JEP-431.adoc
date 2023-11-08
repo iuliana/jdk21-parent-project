@@ -4,10 +4,28 @@
 
 === JEP 431. Sequenced Collections
 
-link:.child-one-project/src/test/java/org/mytoys/one/SequencedCollectionsTest.java[SequencedCollectionsTest#testSequencedCollections]
+link:../child-one-project/src/test/java/org/mytoys/one/SequencedCollectionsTest.java[SequencedCollectionsTest#testSequencedCollections]
 
 [source]
 ----
 cd child-one-project
 mvn -Dtest=SequencedCollectionsTest#testSequencedCollections
 ----
+
+[cols="1,1"]
+|===
+|New Method
+|Equivalent Method
+
+|`list.getFirst()`
+|`list.get(0)`
+
+|`list.getLast()`
+|`list.get(list.size() - 1)`
+
+|`list.removeFirst()`
+|`list.remove(0)`
+
+|`list.removeLast()`
+|`list.remove(list.size() - 1)`
+|===

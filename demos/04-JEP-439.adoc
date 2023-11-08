@@ -4,17 +4,77 @@
 
 === JEP 439. Z Garbage Collector
 
+Z Garbage Collector (ZGC) is a scalable low latency garbage collector introduced as a preview feature in Java 11. It is a GC written from scratch, and it became official feature in JDK 15.  ZGC performs all expensive work concurrently, without stopping the execution  of the application threads for more than 1ms, (10ms in 2019!!!) which makes it suitable for applications which require low latency and/or use a very large heap (multi-terabytes)
+
+Z Garbage Collector (ZGC) *maintains separate generations for young and old objects*. This allows ZGC to collect young objects — which tend to die young — more frequently.
+
+Applications running with Generational ZGC should enjoy
+
+* Lower risks of allocations stalls,
+* Lower required heap memory overhead, and
+* Lower garbage collection CPU overhead.
+
+While being a generational GC, it preserves the essential properties of the non-generational ZGC:
+
+* Pause times should not exceed 1 millisecond,
+* Heap sizes from a few hundred megabytes up to many terabytes should be supported, and
+* Minimal manual configuration should be needed.
+
+NOTE: At its core, ZGC is a concurrent garbage collector, meaning all heavy lifting work is done while *Java threads continue to execute*.
+
+* Starting from JDK 17, ZGC dynamically scales up and down the number of concurrent GC threads.
+* The log is way richer in details
+* ZGC is NUMA-aware, which essentially means that it has a NUMA-aware memory allocator. _(Non-Uniform Memory Access)_ By default, NUMA support is enabled for ZGC. However, if the JVM realizes that it is bound to a subset in the JVM, this feature can be disabled.
+* ZGC is a single-generation GC. It also supports partial compaction. ZGC is also highly performant when it comes to reclaiming memory and reallocating it.
+
+
+==== Old style GC heap allocation (before Java 8)
+
+image::heap-allocation.png[]
+
+==== G1GC heap allocation (starting with Java 8)
+
+image::g1gc-heap-allocation.png[]
+
+Region sizes are not changeable and must be a power of two between 1MB - 32MB, inclusive. Can be explicitly changed with `-XX:G1HeapRegionSize=#m`
+
+==== ZGC heap allocation (starting with Java 11)
+
+ZGC divides memory into regions, also called *ZPages*. ZPages can be dynamically created and destroyed. These can also be dynamically sized (unlike the G1 GC), which are multiples of 2 MB. Here are the size groups of heap regions.
+
+* Small (2 MB)
+* Medium (32 MB)
+* Large (N * 2 MB)
+
+image::zpages-samples.png[]
+
+Unlike other GCs, the physical heap regions of ZGC can map into a bigger heap address space (which can include virtual memory). This can be crucial to combat memory fragmentation issues. Imagine that the user can allocate a really big object in memory, but can’t do so due to unavailability of contiguous space in memory.
+
+This often leads to multiple GC cycles to free up enough contiguous space. If none are available, even after (multiple) GC cycle(s), the JVM will shut down with `OutOfMemoryError`. However, this particular use case is not an issue with the ZGC. Since the physical memory maps to a bigger address space, locating a bigger contiguous space is feasible.
+
+Let's give it try by running this class: link:/Users/iuliana/.work-mine/jdk21-parent-project/child-two-project/src/main/java/org/mytoys/MemoryConsumptionDemo.java[MemoryConsumptionDemo.java]
+
 [source]
 ----
-mvn clean install
+mvn
 
 java -jar -XX:+UseZGC -Xms4G -Xmx16G -XX:ConcGCThreads=20 -Xlog:gc\*:gc.log child-two-project/target/child-two-project-2.0-SNAPSHOT.jar
 
-java -jar -XX:+UseZGC -Xms4G -Xmx16G -XX:ConcGCThreads=20 -Xlog:gc\*:gc.log child-two-project/target/child-two-project-2.0-SNAPSHOT.jar
-
-
-# Execution time: 18074 ms - -XX:+ZGenerational
-# Execution time: 14345 ms - non-generational
+# Execution time: 13015 ms - non-generational
 ----
 
+NOTE: Look for terms `workers` and `pages` in the log.
+
+
 Compare it with Parallel GC from JDK 8: link:/Users/iuliana/.work-mine/jdk8-gc-test/jdk8-gc-test[jdk8-gc-test]
+
+[source]
+----
+# open new terminal
+cd /Users/iuliana/.work-mine/jdk8-gc-test/jdk8-gc-test
+mvn
+
+java -jar -Xms4G -Xmx16G  -XX:+PrintGCDetails -Xloggc:/Users/iuliana/.work-mine/jdk21-parent-project/gc-slow.log target/jdk8-gc-test-1.0-SNAPSHOT.jar
+
+# Execution time: 53803 ms
+----

@@ -4,4 +4,4 @@
 
 === JEP 452. Key Encapsulation Mechanism API
 
-TODO!!
+Introducing an API for key encapsulation mechanisms (KEMs), an encryption technique for securing symmetric keys using public key cryptography.
