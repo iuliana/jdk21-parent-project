@@ -9,14 +9,6 @@
         <artifactId>jdk21-parent-project</artifactId>
     </parent>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcpkix-jdk18on</artifactId>
-            <version>1.76</version>
-        </dependency>
-    </dependencies>
-
     <artifactId>child-one-project</artifactId>
     <name> Child One of main project</name>
     <description>Well, this is awkward. There is not much to say about Child One. </description>
