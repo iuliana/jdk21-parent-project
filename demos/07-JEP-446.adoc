@@ -1,0 +1,19 @@
+== Java 21 Demo
+
+'''
+
+=== JEP 446. Scoped Values (preview)
+
+Thread-local variables have two main purposes.
+
+* First, they are connected to a specific thread and can only be accessed by that thread or any threads created by it.
+* Second, they remove the need for synchronization.
+
+These variables are typically used to share information or context between threads that come from the same parent. Without thread-local variables, you would have to pass extra object parameters to functions to carry information about the state, session, or context. However, thread local variables alos come with a suite of problems:
+
+* *mutability*: thread-local variables are mutable and figuring out which methods modified them and in which order can get tricky.
+* *unbounded lifetime*: if a variable is not removed from ThreadLocal, it will live there until the thread ends. This can lead to data leaking into unrelated tasks, especially when using a thread pool.
+* *Memory Leaks:* Thread data isn't garbage collected until the thread ends. If multiple threads share a thread-local variable, it can be challenging to know when to safely remove it without affecting other threads.
+* *Heavy Memory Usage*: When you create many child threads, they inherit all the thread-local variables from their parent, which can lead to a significant memory footprint.
+
+IMPORTANT: The introduction of virtual threads has made these issues more pronounced, especially because virtual threads allow you to create many threads that share the same operating system thread, making their usage more complex.

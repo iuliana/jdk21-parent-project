@@ -66,7 +66,8 @@ public class RecordPatternsTest {
 
         var resultAge =  switch (johnRecord) {
             case PersonRecord(FullName (var firstName, String lastName), var age) -> age;
-            default -> "-1";
+            case FullName fn -> -2; // just to see that we can have types in here
+            default -> -1;
         };
         System.out.println(">>>> Switch Age: " +  resultAge);
 

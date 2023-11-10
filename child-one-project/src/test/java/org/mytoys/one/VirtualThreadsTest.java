@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.concurrent.*;
 
-// JEP 9. Virtual Threads are designed to replace reactive code
+// JEP 444. Virtual Threads are designed to replace reactive code
 // virtual threads allow programming in the familiar, sequential thread-per-request style.
 // Sequential code is not only easier to write and read but also easier to debug since we can use a debugger to trace the program flow step by step,
 // and stack traces reflect the expected call stack.
@@ -23,7 +23,7 @@ public class VirtualThreadsTest {
     @Test
     void myVirtualThreads(){
         // Os Thread
-        new Thread( () -> System.out.println(" >> Hi, I am " + Thread.currentThread().getName() + " and I am an OS thread! ")).start();
+        new Thread( () -> System.out.println(" >> Hi, I am " + Thread.currentThread().getName() + " and I am an Platform thread! ")).start();
 
         // Virtual thread
         Thread.startVirtualThread(() -> System.out.println(" >> Hi, I am " + Thread.currentThread().getName() + " and I am a Virtual thread! "));
@@ -32,7 +32,7 @@ public class VirtualThreadsTest {
 
         // HEAP of 16GB with ZGC
         // 13,200,000 virtual threads started, 13,102,467 virtual threads running after 61,759 ms
-        // System: Java Threads                                     21
+        // System: Java Threads 21
     }
 
     @Test

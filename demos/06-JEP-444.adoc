@@ -1,0 +1,46 @@
+== Java 21 Demo
+
+'''
+
+=== JEP 444. Virtual Threads
+
+ Virtual threads are lightweight threads that dramatically reduce the effort of writing, maintaining, and observing high-throughput concurrent applications.
+
+* Designed to replace reactive code.
+* Virtual threads allow programming in the familiar, sequential thread-per-request style.
+* Sequential code is not only easier to write and read but also easier to debug since we can use a debugger to trace the program flow step by step, and stack traces reflect the expected call stack.
+* Writing scalable applications with sequential code is made possible by allowing many virtual threads to share a platform thread (the name given to the conventional threads provided by the operating system).
+* When a virtual thread has to wait or is blocked, the platform thread will execute another virtual thread.
+* The best part is that we don’t have to change existing Java code.
+
+ A virtual thread can be created in two ways:
+
+link:/Users/iuliana/.work-mine/jdk21-parent-project/child-one-project/src/test/java/org/mytoys/one/VirtualThreadsTest.java[VirtualThreadsTest#myVirtualThreads]
+
+Here are 1000 platform threads processing 1000 tasks and adding their results:
+
+link:/Users/iuliana/.work-mine/jdk21-parent-project/child-one-project/src/test/java/org/mytoys/one/VirtualThreadsTest.java[KeyEncapsulationTest#osThreadsPlay]
+[source]
+----
+>> OS threads: sum = 50811; time = 10048 ms
+----
+
+Here are 1000 virtual threads processing 1000 tasks and adding their results:
+
+link:/Users/iuliana/.work-mine/jdk21-parent-project/child-one-project/src/test/java/org/mytoys/one/VirtualThreadsTest.java[KeyEncapsulationTest#virtualThreadsPlay]
+[source]
+----
+>> Virtual threads: sum = 48870; time = 1025 ms
+----
+
+How many virtual threads can I run on my machine? (The app will still run, computer will still run. The only way to know that something went wrong is to check the GC logs and notice memory is not being freed and no new threads are not created. Yes, a new kind of hell!)
+
+[source]
+----
+java -jar -XX:+UseZGC -Xms16G -Xmx16G -Xlog:gc\* child-one-project/target/child-one-project-2.0-SNAPSHOT.jar
+
+# HEAP of 16GB with ZGC
+# 13,200,000 virtual threads started, 13,102,467 virtual threads running after 61,759 ms
+# Memory : 45 GB (physical 16GB + 29GB virtual)
+----
+

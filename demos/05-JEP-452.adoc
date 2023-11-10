@@ -6,7 +6,7 @@
 
 Java21 introduces Key Encapsulation Mechanisms (KEMs), as the preferred approach to Authenticated Key Exchanges (AKE) within Public Key Encryption (PKE) schemes.
 
-In the older key exchange algorithm, the sender encrypts the message using their private key, and the receiver decrypts it with the sender's publicly available key. However, this approach is no longer considered secure, as quantum computers can compromise most key exchange algorithms, rendering AKEs vulnerable.
+In the older key exchange algorithm, the sender encrypts the message using their private key, and the receiver decrypts it with the sender's publicly available key. However, this approach is no longer considered secure, as *quantum computers can compromise most key exchange algorithms*, rendering AKEs vulnerable.
 
 In the KEM scheme, in addition to the public-private key pair, the sender and receiver mutually agree upon an additional "secret value". The sender then transmits this "secret value" to the receiver in an encrypted form. Only the receiver possesses the capability to decrypt this "secret value" and put it to use.
 
@@ -25,3 +25,5 @@ The KEM API consists of three functions:
 -> and a key decapsulation function.
 
 image::KEM.png[]
+
+Let's give it try by running this class: link:/Users/iuliana/.work-mine/jdk21-parent-project/child-one-project/src/test/java/org/mytoys/one/KeyEncapsulationTest.java[KeyEncapsulationTest#testKEM]

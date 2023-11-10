@@ -19,7 +19,7 @@ public class MemoryConsumptionDemo {
         List<Singer> singers = new ArrayList<>();
         for (int i = 0; i < 50_000_000; ++i) {
             singers.add(genSinger());
-            if (i % 1000 == 0) {
+            if (i % 1_000_000 == 0) {
                 printBusyMemory(log);
             }
         }
@@ -34,7 +34,7 @@ public class MemoryConsumptionDemo {
 
     public static void printBusyMemory(Logger log) {
         long memory = runtime.totalMemory() - runtime.freeMemory();
-        //log.info("Occupied memory: {} MB", (memory / MEGABYTE));
+        log.info("Occupied memory: {} MB", (memory / MEGABYTE));
     }
     public static void printTotalMemory(Logger log) {
         //log.info("Total Program memory: {} MB", (runtime.totalMemory()/MEGABYTE));

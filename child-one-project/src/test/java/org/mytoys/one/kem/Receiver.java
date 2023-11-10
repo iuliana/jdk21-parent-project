@@ -1,8 +1,13 @@
 package org.mytoys.one.kem;
 
 import javax.crypto.*;
+import javax.crypto.spec.DHParameterSpec;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
+import java.security.spec.InvalidParameterSpecException;
 
 public class Receiver {
     private final String algorithm;
@@ -38,6 +43,7 @@ public class Receiver {
         // Creates a KEM decapsulator on the KEM receiver side.
         KEM.Decapsulator receiverDCAP = kemReceiver.newDecapsulator(receiverPrivateKey);
         receiverSecretKey = receiverDCAP.decapsulate(encapsulation);
+
         } catch (NoSuchAlgorithmException | InvalidKeyException | DecapsulateException e) {
             throw new RuntimeException("Could not decapsulate secret key!!", e);
         }
@@ -51,12 +57,14 @@ public class Receiver {
 
     public void receiveMessage(byte[] encryptedMessage){
         try {
-            cipher = Cipher.getInstance(receiverPrivateKey.getAlgorithm());
-            cipher.init(Cipher.DECRYPT_MODE, receiverSecretKey);
+            cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            SecretKeySpec spec = new SecretKeySpec(receiverSecretKey.getEncoded(), "AES");
+            IvParameterSpec specR = new IvParameterSpec("0102030405060708".getBytes());
+            cipher.init(Cipher.DECRYPT_MODE, spec, specR);
             byte[] decriptedMessage = cipher.doFinal(encryptedMessage);
             message =  new String(decriptedMessage, StandardCharsets.UTF_8);
         }  catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException |
-                  NoSuchPaddingException e) {
+                  NoSuchPaddingException | InvalidAlgorithmParameterException e) {
             throw new RuntimeException("Could receive and decrypt message!", e);
         }
     }
