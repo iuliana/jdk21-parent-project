@@ -21,14 +21,48 @@ import java.util.concurrent.*;
 public class VirtualThreadsTest {
 
     @Test
+    void myThreadsWithThreadInfo() {
+        // Os Thread
+        new Thread( () -> System.out.println(" >> Hi, I am " + Thread.currentThread() + " and I am an Platform thread! ")).start();
+        // Virtual thread
+        Thread.startVirtualThread(() -> System.out.println(" >> Hi, I am " + Thread.currentThread() + " and I am a Virtual thread!"));
+        // or using VirtualThreadBuilder
+        Thread.ofVirtual().start(() -> System.out.println(" >> Hi, I am " + Thread.currentThread() + " and I am also a Virtual thread! "));
+        // or creating it unstarted
+        Thread vt = Thread.ofVirtual().unstarted(() -> System.out.println(" >> Hi, I am " + Thread.currentThread() + " and I am also a Virtual thread! "));
+        vt.start();
+    }
+
+    @Test
+    void myThreadsWithCustomNames() {
+        // Os Thread
+        Thread.ofPlatform()
+                .name("Jimmy-P")
+                .start(() -> System.out.println(" >> Hi, I am " + Thread.currentThread().getName() + " and I am an Platform thread! "));
+        // Virtual thread
+        Thread.startVirtualThread(() -> System.out.println(" >> Hi, I am " + Thread.currentThread() + " and I am a Virtual thread!"));
+        // or using VirtualThreadBuilder
+        Thread.ofVirtual()
+                .name("Jimmy-V1")
+                .start(() -> System.out.println(" >> Hi, I am " + Thread.currentThread().getName() + " and I am also a Virtual thread! "));
+
+        // or creating it unstarted
+        Thread vt = Thread.ofVirtual()
+                .name("Jimmy-V2")
+                .unstarted(() -> System.out.println(" >> Hi, I am " + Thread.currentThread().getName() + " and I am also a Virtual thread! "));
+        vt.start();
+    }
+    @Test
     void myVirtualThreads(){
         // Os Thread
         new Thread( () -> System.out.println(" >> Hi, I am " + Thread.currentThread().getName() + " and I am an Platform thread! ")).start();
-
         // Virtual thread
-        Thread.startVirtualThread(() -> System.out.println(" >> Hi, I am " + Thread.currentThread().getName() + " and I am a Virtual thread! "));
+        Thread.startVirtualThread(() -> System.out.println(" >> Hi, I am " + Thread.currentThread().getName() + " and I am a Virtual thread!"));
         // or using VirtualThreadBuilder
         Thread.ofVirtual().start(() -> System.out.println(" >> Hi, I am " + Thread.currentThread().getName() + " and I am also a Virtual thread! "));
+        // or creating it unstarted
+        Thread vt = Thread.ofVirtual().unstarted(() -> System.out.println(" >> Hi, I am " + Thread.currentThread().getName() + " and I am also a Virtual thread! "));
+        vt.start();
 
         // HEAP of 16GB with ZGC
         // 13,200,000 virtual threads started, 13,102,467 virtual threads running after 61,759 ms

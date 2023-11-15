@@ -1,0 +1,39 @@
+== Java 21 Demo
+
+'''
+
+=== JEP 453. Structured Concurrency (preview)
+
+New API for simplifying concurrent programming - Structured concurrency treats groups of related tasks running in different threads as a single unit of work, thereby streamlining error handling and cancellation, improving reliability, and enhancing observability.
+
+The principal class of the structured concurrency API is `StructuredTaskScope` in the `java.util.concurrent` package. This class enables you coordinate a group of concurrent subtasks as a unit.
+
+* With a `StructuredTaskScope` instance, you _fork_ each subtask, which runs them in their own individual thread (Virtual thread, that is).
+
+* After, you _join_ them as a unit. As a result, the _StructuredTaskScope_ ensures that the subtasks are completed before the main task continues.
+
+* `ShutdownOnSuccess` captures the first result and shuts down the task scope to interrupt unfinished threads and wakeup the owner. This class is intended for cases where the results of all subtasks are required (“invoke all”); if any subtask fails then the results of other unfinished subtasks are no longer needed. If defines methods to throw an exception if any of the subtasks fail
+
+* `ShutdownOnFailure` captures the first exception and shuts down the task scope.
+
+* Since, the `StructuredTaskScope` class implements `AutoCloseable`, it is recommended to open a scope in a `try-with-resources` block.
+
+* Task scopes form a tree where parent-child relations are *established implicitly* when opening a new task scope.
+
+* Task scopes can be opened from inside other tasks scope and this leads to a tree like structure where the enclosing tasks scope becomes the parent of newly created task scope.
+
+=== How is it different from Future, Callable,ExecutorService, ThreadPools, CompletableFuture etc
+
+Structured concurrency and Java’s existing concurrency mechanisms both aim to manage concurrent tasks, but they do so in different ways and have distinct advantages and disadvantages.
+
+Advantages:
+
+- *hierarchical organization of tasks* - parent-child relationship is enforced, parents must wait for child tasks to complete to finish
+- parent tasks waits for children and cleans up after them, *better resource management* and *resource leaks avoidance*
+- *no orphaned tasks* - child tasks complete before parents
+- *easier error handling* - error handling and propagation is more straightforward, as errors can be handled and propagated withing task hierarchy
+
+Conclusion: More work is needed to improve the observability of concurrent code.
+
+
+NOTE: This implementation looks a lot like our Brooklyn Tasks, only our are more powerful. :D

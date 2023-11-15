@@ -100,3 +100,7 @@ java -jar -Xms16G -Xmx16G  -XX:+PrintGCDetails -Xloggc:/Users/iuliana/.work-mine
 ----
 
 In a future release *the Generational ZGC  will become the default*, at which point `-XX:-ZGenerational` will select non-generational ZGC, and even further in the future this will be removed.
+
+IMPORTANT: Bigger is better, want smaller pauses, give it more memory.
+
+IMPORTANT: ZGC -> single-generational initially or non-generational. (ZGC with generations -> 75% less memory, but with the same results.) Well... not really.

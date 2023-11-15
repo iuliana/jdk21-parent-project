@@ -81,3 +81,7 @@ mvn -Dtest=StringTemplatesTest#testStringTemplates21JSONProcessor
 # FMT processor
 mvn -Dtest=StringTemplatesTest#testFMTTemplates21Processor
 ----
+
+== Conclusions
+
+The new additions to the `String` class, might make libraries like Guava and Commons unnecessary -> reducing the no. of dependencies for some applications.

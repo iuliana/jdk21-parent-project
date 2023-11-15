@@ -45,6 +45,8 @@ mvn -Dtest=RecordPatternsTest#testRecordPatterns441
 
 === JEP 443. Unnamed Pattern & Unnamed Variables (preview)
 
+The underscore was supported up to JDK 8, removed in Java 9, and it will finally be reintroduced in a version > 21, for purposes similar to the ones in GoLang.
+
 Enhance the Java language with unnamed patterns, which match a record component without stating the component's name or type, and `unnamed variables`, which can be initialized but not used. Both are denoted by an underscore character, `_`.
 
 link:../child-one-project/src/test/java/org/mytoys/one/RecordPatternsTest.java[RecordPatternsTest#testUnnamedPattern443]

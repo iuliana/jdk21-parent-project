@@ -44,3 +44,10 @@ java -jar -XX:+UseZGC -Xms16G -Xmx16G -Xlog:gc\* child-one-project/target/child-
 # Memory : 45 GB (physical 16GB + 29GB virtual)
 ----
 
+IMPORTANT: Since they are so lightweight, there is no need to pool them. You need a thread, just create one.
+
+IMPORTANT: Virtual threads are designed to model a _single task_, rather than a mechanism for running tasks.
+
+IMPORTANT: Virtual threads are transparently suspended/resumed when they block. The Blocking API throughout the JDK has been retrofitted to be aware of virtual threads.
+
+One of my goals for my own personal work with JAVA 21 is - So, how can this be broken? Because everything breaks sooner or later and would be nice to have a heads-up.
