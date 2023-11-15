@@ -11,7 +11,7 @@
  and trailing white space removed.
 * `stripLeading()` - Returns a string whose value is this string, with all leading white space removed.
 * `stripTrailing()` - Returns a string whose value is this string, with all trailing white space removed.
-* `isBlank()` - Returns `true if the string is empty or contains only white space codepoints, otherwise `false`.
+* `isBlank()` - Returns `true` if the string is empty or contains only white space codepoints, otherwise `false`.
 * `lines()` - Returns a stream of lines extracted from this string,
  separated by line terminators.
 * `repeat(int count)` - Returns a string whose value is the concatenation of this string repeated `count` times.
@@ -20,7 +20,7 @@
 
 * `indent(int n)` - Adjusts the indentation of each line of this string based on the value of `n`, and normalizes line termination characters.
 * `<R> R transform(Function<? super String, ? extends R> f)` - This method allows the application of a function to `this` string. The function should expect a single String argument and produce an `R` result.
-* `describeConstable()` - Returns an `Optional<String> containing the nominal descriptor for this instance, which is the instance itself.
+* `describeConstable()` - Returns an `Optional<String>` containing the nominal descriptor for this instance, which is the instance itself.
 * `resolveConstantDesc(MethodHandles.Lookup lookup)` - Resolves this instance as a `ConstantDesc`, the result of which is the instance itself.
 
 *In Java 15:*

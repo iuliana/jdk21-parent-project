@@ -12,6 +12,14 @@ The principal class of the structured concurrency API is `StructuredTaskScope` i
 
 * After, you _join_ them as a unit. As a result, the _StructuredTaskScope_ ensures that the subtasks are completed before the main task continues.
 
+* _joinUntil(..) can be used to specify a deadline. When specified a time duration using `Instant`, `joinUntil()` method waits until:
+
+* All threads started in the task scope have finished execution
+* The `scope.shutdown()` method is invoked
+* The current thread is interrupted
+* Or, the deadline is reached
+
+
 * `ShutdownOnSuccess` captures the first result and shuts down the task scope to interrupt unfinished threads and wakeup the owner. This class is intended for cases where the results of all subtasks are required (“invoke all”); if any subtask fails then the results of other unfinished subtasks are no longer needed. If defines methods to throw an exception if any of the subtasks fail
 
 * `ShutdownOnFailure` captures the first exception and shuts down the task scope.

@@ -1,0 +1,18 @@
+== Java 21 Demo
+
+'''
+
+=== JEP 442. Foreign Function & Memory API (third preview)
+
+Introduce an API by which Java programs can interoperate with code and data outside of the Java runtime. By efficiently invoking foreign functions (i.e., code outside the JVM), and by safely accessing foreign memory (i.e., memory not managed by the JVM), the API enables Java programs to call native libraries and process native data without the brittleness and danger of JNI.
+
+The FFM API is contained in the package `java.lang.foreign`.
+
+_On-heap memory_ is memory in the Java heap, which is a region of memory managed by the garbage collector. It is where your objects reside. The heap and grow and shrink as needed by the running application. When the heap becomes full, garbage collection is performed: The JVM identifies the objects that are no longer being used (unreachable objects) and recycles their memory, making space for new allocations.
+
+_Off-heap memory_ is memory outside the Java heap. To invoke a function or method from a different language such as C from a Java application, its arguments must be in off-heap memory. Unlike heap memory, *off-heap memory is not subject to garbage collection* when no longer needed. You can control how and when off-heap memory is deallocated.
+
+You interact with _on-heap_ and _off-heap_ memory through a `MemorySegment` object. Each memory segment is associated with, or backed by, a contiguous region of memory.
+
+* Heap segment - backed by a region of memory inside the Java heap, an on-heap region.
+* Native segment -  backed by a region of memory outside the Java heap, an off-heap region.
