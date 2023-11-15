@@ -17,3 +17,8 @@ Because the project is declared with
 ====
 
 All the demo sessions are grouped link:demos[here].
+
+== TODO
+
+-> Add details about the plan to support dependencies compiled with other Java versions.
+-> get the images and details from the personal computer.
