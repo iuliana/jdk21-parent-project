@@ -2,7 +2,7 @@
 
 '''
 
-=== JEP 442. Foreign Function & Memory API (third preview)
+=== JEP 442. Foreign Function & Memory API (3rd preview)
 
 Introduce an API by which Java programs can interoperate with code and data outside of the Java runtime. By efficiently invoking foreign functions (i.e., code outside the JVM), and by safely accessing foreign memory (i.e., memory not managed by the JVM), the API enables Java programs to call native libraries and process native data without the brittleness and danger of JNI.
 

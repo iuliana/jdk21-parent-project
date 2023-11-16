@@ -20,5 +20,50 @@ All the demo sessions are grouped link:demos[here].
 
 == TODO
 
--> Add details about the plan to support dependencies compiled with other Java versions.
--> get the images and details from the personal computer.
+* Add details about the plan to support dependencies compiled with other Java versions.
+* get the images and details from the personal computer.
+
+
+== Already Demoed
+
+* Maven 4.x
+
+'''
+
+* JEP 430. String Templates (preview)
+* JEP 440. Record PatternsJEP 440. Record Patterns
+* JEP 441. Pattern Matching for `switch`
+* JEP 443. Unnamed Pattern & Unnamed Variables (preview)
+* JEP 445. Unnamed Classes and Instance Main Methods (preview)
+
+'''
+
+== To Be Demo-ed
+
+* JEP 431. Sequenced Collections
+* JEP 439. Z Garbage Collector
+
+'''
+
+* JEP 452. Key Encapsulation Mechanism API -- TODO go over this again, maybe figure out how to use the Cipher
+* JEP 444. Virtual Threads
+
+'''
+
+* JEP 446. Scoped Values (preview) -- TODO review, figure out how to bind the value
+* JEP 453. Structured Concurrency (preview)
+
+'''
+
+* JEP 442. Foreign Function & Memory API (3rd preview) -- TODO (in progress)
+* JEP 448. Vector API (6th Incubator) -- TODO
+
+'''
+
+* (Bonus) Java 22 (preview) -- TODO
+    ** JEP 459.	String Templates (2nd Preview)
+    ** JEP 447.	Statements before `super(...)` (1st Preview)
+    ** JEP 454.	Foreign Function & Memory API
+    ** JEP 456.	Unnamed Variables & Patterns
+    ** JEP 460.	Vector API (Seventh Incubator)
+* (Bonus) Future Plans for the classfile-API (Java 25) -- TODO
