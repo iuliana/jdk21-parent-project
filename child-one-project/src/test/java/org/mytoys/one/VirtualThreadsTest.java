@@ -23,7 +23,10 @@ public class VirtualThreadsTest {
     @Test
     void myThreadsWithThreadInfo() {
         // Os Thread
-        new Thread( () -> System.out.println(" >> Hi, I am " + Thread.currentThread() + " and I am an Platform thread! ")).start();
+        new Thread( () ->
+                System.out.println(" >> Hi, I am " + Thread.currentThread() + " and I am an Platform thread! "))
+                .start();
+
         // Virtual thread
         Thread.startVirtualThread(() -> System.out.println(" >> Hi, I am " + Thread.currentThread() + " and I am a Virtual thread!"));
         // or using VirtualThreadBuilder

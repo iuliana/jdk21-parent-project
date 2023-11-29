@@ -38,18 +38,14 @@ All the demo sessions are grouped link:demos[here].
 
 '''
 
-== To Be Demo-ed
-
 * JEP 431. Sequenced Collections
 * JEP 439. Z Garbage Collector
-
-'''
-
-* JEP 452. Key Encapsulation Mechanism API -- TODO go over this again, maybe figure out how to use the Cipher
 * JEP 444. Virtual Threads
 
-'''
 
+== To Be Demo-ed
+
+* JEP 452. Key Encapsulation Mechanism API -- TODO go over this again, maybe figure out how to use the Cipher
 * JEP 446. Scoped Values (preview) -- TODO review, figure out how to bind the value
 * JEP 453. Structured Concurrency (preview)
 

@@ -4,6 +4,14 @@
 
 === JEP 431. Sequenced Collections
 
+Java’s collections framework lacks a collection type that represents a sequence of elements with a defined encounter order. It also lacks a uniform set of operations that apply across such collections.
+
+For example, `List` and `Deque` both define an encounter order but their common supertype is Collection, which does not.
+
+Similarly, `Set` does not define an encounter order, and subtypes such as `HashSet` do not define one, but subtypes such as `SortedSet` and `LinkedHashSet` do.
+
+Enter the `SequencedCollection<E>` interface.
+
 link:../child-one-project/src/test/java/org/mytoys/one/SequencedCollectionsTest.java[SequencedCollectionsTest#testSequencedCollections]
 
 [source]

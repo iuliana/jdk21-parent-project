@@ -62,15 +62,16 @@ Let's give it try by running this class: link:/Users/iuliana/.work-mine/jdk21-pa
 
 [source]
 ----
-mvn
+mvn # build the jars
 
 java -jar -XX:+UseZGC -Xms4G -Xmx16G -XX:ConcGCThreads=20 -Xlog:gc\*:gc-non-generational.log child-two-project/target/child-two-project-2.0-SNAPSHOT.jar
 # Execution time: 13015 ms - non-generational
 
 # we know we are not discarding references until the end of execution, but it barely makes any difference, because non-generational ZGC resized the ZPages to fit its needs
-# might be quicker because it is good at organizing its young objects and avoiding the heavy job of compacting the heap.
+# might be quicker because it is good at organizing its young objects and avoiding the heavy job of compacting the heap
+
 java -jar -XX:+UseZGC -Xms16G -Xmx16G -XX:ConcGCThreads=20 -Xlog:gc\*:gc-non-generational.log child-two-project/target/child-two-project-2.0-SNAPSHOT.jar
-Execution time: 13989 ms
+# Execution time: 13989 ms
 # ------------------------------------------------------------------
 
 java -jar -XX:+ZGenerational -XX:+UseZGC -Xms4G -Xmx16G -XX:ConcGCThreads=20 -Xlog:gc\*:gc-generational.log child-two-project/target/child-two-project-2.0-SNAPSHOT.jar
@@ -78,7 +79,7 @@ java -jar -XX:+ZGenerational -XX:+UseZGC -Xms4G -Xmx16G -XX:ConcGCThreads=20 -Xl
 
 # we know we are not discarding references until the end of execution,but it makes no difference to the generational one
 java -jar -XX:+ZGenerational -XX:+UseZGC -Xms16G -Xmx16G -XX:ConcGCThreads=20 -Xlog:gc\*:gc-generational.log child-two-project/target/child-two-project-2.0-SNAPSHOT.jar
-Execution time: 17145 ms
+# Execution time: 17145 ms
 ----
 
 NOTE: Look for terms `workers` and `pages` in the log.

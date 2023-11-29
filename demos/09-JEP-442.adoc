@@ -2,6 +2,12 @@
 
 '''
 
+Java objects reside on the heap. However, this can occasionally lead to problems such as inefficient memory usage, low performance, and garbage collection issues. Native memory can be more efficient in these cases, but using it has been traditionally very difficult and error-prone.
+
+Java 14 introduces the foreign memory access API with link:https://openjdk.org/jeps/370[JEP 370],  to access native memory more securely and efficiently. Java 21 continues adding useful components in this area with link:https://openjdk.org/jeps/442[JEP 442].
+
+Before the introduction of the foreign memory access API in Java, there were two main ways to access native memory in Java. These are `java.nio.ByteBuffer` and `sun.misc.Unsafe` classes.
+
 === JEP 442. Foreign Function & Memory API (3rd preview)
 
 Introduce an API by which Java programs can interoperate with code and data outside of the Java runtime. By efficiently invoking foreign functions (i.e., code outside the JVM), and by safely accessing foreign memory (i.e., memory not managed by the JVM), the API enables Java programs to call native libraries and process native data without the brittleness and danger of JNI.
@@ -14,5 +20,26 @@ _Off-heap memory_ is memory outside the Java heap. To invoke a function or metho
 
 You interact with _on-heap_ and _off-heap_ memory through a `MemorySegment` object. Each memory segment is associated with, or backed by, a contiguous region of memory.
 
-* Heap segment - backed by a region of memory inside the Java heap, an on-heap region.
-* Native segment -  backed by a region of memory outside the Java heap, an off-heap region.
+* *Heap segment* - backed by a region of memory inside the Java heap, an _on-heap_ region.
+* *Native segment* -  backed by a region of memory outside the Java heap, an _off-heap_ region.
+
+An *arena* controls the lifecycle of native memory segments. To create an `arena`, use one of the methods in the `Arena` interface, such as `Arena.ofConfined()`. You use an arena to allocate a memory segment. Each arena has a _scope_, which specifies when the region of memory that backs the memory segment will be deallocated and is no longer valid. A memory segment can only be accessed if the scope associated with it is still _valid_ or _alive_.
+
+=== Types of `Arenas`
+
+* A *confined arena* provides a bounded and deterministic lifetime and is created with `Arena.ofConfined()`.
+    ** Its scope is alive from when it's created to when it's closed.
+    ** A confined arena has an owner thread.This is typically the thread that created it.
+    ** Only the owner thread can access the memory segments allocated in a confined arena.
+    ** You'll get an exception if you try to close a confined arena with a thread other than the owner thread.
+* A *shared arena*, which is created with `Arena::ofShared`, has no owner thread.
+    ** Multiple threads may access the memory segments allocated in a shared arena.
+    ** In addition, any thread may close a shared arena, and the closure is guaranteed to be safe and atomic.
+* An *automatic arena*, which is created with Arena::ofAuto. This is an area that's managed, automatically, by the garbage collector.
+    ** Any thread can access memory segments allocated by an automatic arena.
+    ** If you call `Arena::close` on an automatic arena, you'll get a `UnsupportedOperationException`.
+* A *global arena*, which is created with `Arena::global`.
+    ** Any thread can access memory segments allocated with this arena.
+    ** In addition, the region of memory of these memory segments is never deallocated;
+    ** if you call `Arena::close` on a global arena, you'll get a `UnsupportedOperationException`.
+
