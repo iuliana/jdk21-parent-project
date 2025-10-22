@@ -7,18 +7,19 @@
     <parent>
         <groupId>org.mytoys</groupId>
         <artifactId>jdk21-parent-project</artifactId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
-
-    <packaging>jar</packaging>
 
     <artifactId>child-two-project</artifactId>
     <name> Child Two of main project</name>
     <description>Well, this is awkward. There is not much to say about Child Two either. </description>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>org.mytoys</groupId>
             <artifactId>child-one-project</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

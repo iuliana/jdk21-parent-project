@@ -3,16 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.mytoys</groupId>
         <artifactId>jdk21-parent-project</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>child-one-project</artifactId>
-    <name> Child One of main project</name>
-    <description>Well, this is awkward. There is not much to say about Child One. </description>
+    <artifactId>child-four-project</artifactId>
+    <name> Child Four of main project</name>
+    <description>Well, this is awkward. There is not much to say about Child Four. </description>
     <packaging>jar</packaging>
 
     <build>
@@ -44,7 +43,7 @@
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>libs/</classpathPrefix>
                             <mainClass>
-                                org.mytoys.one.HowManyVirtualThreadsDoingSomething
+                                org.mytoys.four.MainServer
                             </mainClass>
                         </manifest>
                     </archive>
@@ -61,6 +60,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>

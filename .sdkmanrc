@@ -1,4 +1,4 @@
 # Enable auto-env through the sdkman_auto_env config
 # Add key=value pairs of SDKs to use below
-java=jdk-21
-maven=4.0.0-alpha-8
+java=21.0.8-amzn
+maven=4.0.0-rc-4
